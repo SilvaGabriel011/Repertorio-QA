@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QA Store</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>QA Store</h1>
+    <div id="session-bar" hidden>
+      <span id="user-email" data-testid="user-email"></span>
+      <button id="logout-button" data-testid="logout-button">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <p id="app-error" data-testid="app-error" role="alert" hidden></p>
+
+    <section id="login-view" data-testid="login-view">
+      <h2>Sign in</h2>
+      <form id="login-form">
+        <label for="email">Email</label>
+        <input id="email" data-testid="email-input" type="email" autocomplete="username" required />
+        <label for="password">Password</label>
+        <input id="password" data-testid="password-input" type="password" autocomplete="current-password" required />
+        <button type="submit" data-testid="login-button">Sign in</button>
+      </form>
+    </section>
+
+    <section id="catalog-view" data-testid="catalog-view" hidden>
+      <div class="catalog-layout">
+        <div>
+          <h2>Products</h2>
+          <label for="search">Search products</label>
+          <input id="search" data-testid="search-input" type="search" placeholder="Search…" />
+          <ul id="product-list" data-testid="product-list"></ul>
+        </div>
+        <aside data-testid="cart-panel">
+          <h2>Cart (<span id="cart-badge" data-testid="cart-badge">0</span>)</h2>
+          <ul id="cart-items"></ul>
+          <p>Subtotal: <strong id="cart-subtotal" data-testid="cart-subtotal">$0.00</strong></p>
+          <button id="checkout-button" data-testid="checkout-button" disabled>Checkout</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="checkout-view" data-testid="checkout-view" hidden>
+      <h2>Checkout</h2>
+      <ul id="checkout-items"></ul>
+      <label for="coupon">Coupon code (optional)</label>
+      <input id="coupon" data-testid="coupon-input" type="text" />
+      <button id="place-order-button" data-testid="place-order-button">Place order</button>
+      <button id="back-to-catalog" data-testid="back-to-catalog" type="button">Back</button>
+    </section>
+
+    <section id="confirmation-view" data-testid="confirmation-view" hidden>
+      <h2>Order confirmed</h2>
+      <dl>
+        <dt>Order ID</dt><dd id="order-id" data-testid="order-id"></dd>
+        <dt>Subtotal</dt><dd id="order-subtotal" data-testid="order-subtotal"></dd>
+        <dt>Discount</dt><dd id="order-discount" data-testid="order-discount"></dd>
+        <dt>Shipping</dt><dd id="order-shipping" data-testid="order-shipping"></dd>
+        <dt>Total</dt><dd id="order-total" data-testid="order-total"></dd>
+      </dl>
+      <button id="new-order-button" data-testid="new-order-button">Continue shopping</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
