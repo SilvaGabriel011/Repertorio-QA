@@ -18,6 +18,8 @@
     "test:a11y": "playwright test --project=a11y",
     "test:regression": "playwright test --project=regression",
     "test:e2e": "playwright test --project=e2e",
+    "test:integration": "vitest run tests/integration",
+    "test:bdd": "NODE_OPTIONS=\"--import tsx/esm\" cucumber-js",
     "test:load": "k6 run tests/load/baseline.js",
     "test:all": "npm run typecheck && npm run test:unit && npm run test:contract && playwright test",
     "report": "playwright show-report"
@@ -32,10 +34,13 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
+    "@cucumber/cucumber": "^13.0.0",
     "@pact-foundation/pact": "^17.0.1",
     "@playwright/test": "~1.56.0",
     "@types/express": "^4.17.23",
     "@types/node": "^22.10.0",
+    "@types/supertest": "^7.2.0",
+    "supertest": "^7.2.2",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
     "vitest": "^4.0.0",
