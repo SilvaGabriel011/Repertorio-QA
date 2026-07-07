@@ -1,6 +1,6 @@
 # Repertório QA
 
-**A senior QA portfolio: one self-contained system under test, ten test scopes, BDD specs, dual CI, and every decision written down.**
+**My portfolio: one self-contained system under test, ten test scopes, BDD specs, dual CI, and every decision written down.**
 
 ![CI](https://github.com/SilvaGabriel011/Repertorio-QA/actions/workflows/ci.yml/badge.svg)
 
