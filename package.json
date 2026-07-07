@@ -1,0 +1,44 @@
+{
+  "name": "repertorio-qa",
+  "version": "1.0.0",
+  "description": "Senior QA portfolio: one system under test, eight test scopes, every decision documented",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "tsx src/api/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run tests/unit",
+    "test:contract": "vitest run tests/contract",
+    "test:smoke": "playwright test --project=smoke",
+    "test:api": "playwright test --project=api",
+    "test:security": "playwright test --project=security",
+    "test:a11y": "playwright test --project=a11y",
+    "test:regression": "playwright test --project=regression",
+    "test:e2e": "playwright test --project=e2e",
+    "test:load": "k6 run tests/load/baseline.js",
+    "test:all": "npm run typecheck && npm run test:unit && npm run test:contract && playwright test",
+    "report": "playwright show-report"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "overrides": {
+    "@axe-core/playwright": {
+      "playwright-core": "~1.56.0"
+    }
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@pact-foundation/pact": "^17.0.1",
+    "@playwright/test": "~1.56.0",
+    "@types/express": "^4.17.23",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.0",
+    "zod": "^3.24.0"
+  }
+}

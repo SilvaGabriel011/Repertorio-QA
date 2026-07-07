@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate-1-static-unit-contract:
+    name: Gate 1 — static, unit, contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run test:contract
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pacts
+          path: pacts
+
+  gate-2-functional:
+    name: Gate 2 — smoke, api, security, a11y, regression, e2e
+    needs: gate-1-static-unit-contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Smoke gate
+        run: npm run test:smoke
+      - name: Full functional sweep
+        run: npx playwright test --project=api --project=security --project=a11y --project=regression --project=e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report
+
+  gate-3-load-baseline:
+    name: Gate 3 — load baseline
+    needs: gate-2-functional
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: grafana/setup-k6-action@v1
+      - name: Start the system under test
+        run: |
+          npx tsx src/api/server.ts &
+          timeout 30 bash -c 'until curl -sf http://localhost:3000/health; do sleep 1; done'
+      - run: k6 run tests/load/baseline.js

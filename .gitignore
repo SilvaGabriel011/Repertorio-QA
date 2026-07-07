@@ -1,0 +1,9 @@
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+logs/
+*.log
+.DS_Store
+k6-summary.json
+pacts/
